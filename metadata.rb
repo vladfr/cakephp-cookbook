@@ -15,15 +15,30 @@ recipe "cakephp", "Installs and configures CakePHP LAMP stack on a single system
   supports os
 end
 
+attribute "cakephp/install_method"
+  :display_name => "CakePHP install version"
+  :description => "Values: url, source, package"
+  :default => "url"
+
+attribute "cakephp/install_url",
+  :display_name => "CakePHP installation download URL",
+  :description => "Location to get CakePHP from, when installing via URL, %s is a placeholder for version",
+  :default => "http://github.com/cakephp/cakephp/tarball/"
+
 attribute "cakephp/version",
-  :display_name => "CakePHP download version",
+  :display_name => "CakePHP version",
   :description => "Version of CakePHP to download from the CakePHP site.",
-  :default => "1.2.5"
+  :default => "2.2.1"
 
 attribute "cakephp/dir",
   :display_name => "CakePHP installation directory",
   :description => "Location to place CakePHP files.",
   :default => "/var/www"
+
+attribute "cakephp/config/debug",
+  :display_name => "Debug value",
+  :description => "Cake debugger. 0 for disabled, 1 for enabled, 2 for enabled with traces",
+  :default => "0"
 
 attribute "cakephp/db/database",
   :display_name => "CakePHP MySQL database",
