@@ -97,6 +97,7 @@ template "#{node[:cakephp][:dir]}/app/config/database.php" do
   group "root"
   mode "0644"
   variables(
+    :host            => node[:cakephp][:db][:host],
     :database        => node[:cakephp][:db][:database],
     :user            => node[:cakephp][:db][:user],
     :password        => node[:cakephp][:db][:password]

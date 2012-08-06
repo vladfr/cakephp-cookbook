@@ -40,17 +40,22 @@ attribute "cakephp/config/debug",
   :description => "Cake debugger. 0 for disabled, 1 for enabled, 2 for enabled with traces",
   :default => "0"
 
+attribute "cakephp/db/host",
+  :display_name => "CakePHP DB host",
+  :description => "CakePHP will use this URL as a db host machine.",
+  :default => "localhost"
+
 attribute "cakephp/db/database",
-  :display_name => "CakePHP MySQL database",
-  :description => "CakePHP will use this MySQL database to store its data.",
+  :display_name => "CakePHP DB database",
+  :description => "CakePHP will use this database to store its data.",
   :default => "cakephpdb"
 
 attribute "cakephp/db/user",
-  :display_name => "CakePHP MySQL user",
-  :description => "CakePHP will connect to MySQL using this user.",
+  :display_name => "CakePHP DB user",
+  :description => "CakePHP will connect to the database using this user.",
   :default => "cakephpuser"
 
 attribute "cakephp/db/password",
-  :display_name => "CakePHP MySQL password",
-  :description => "Password for the CakePHP MySQL user.",
+  :display_name => "CakePHP DB password",
+  :description => "Password for the CakePHP database user.",
   :default => "randomly generated"
