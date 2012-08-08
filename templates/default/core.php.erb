@@ -179,17 +179,17 @@
 /**
  * The level of CakePHP security.
  */
-  Configure::write('Security.level', 'medium');
+  Configure::write('Security.level', '<%= @node['cakephp']['config']['security_level']  %>');
 
 /**
  * A random string used in security hashing methods.
  */
-  Configure::write('Security.salt', 'DYhG93b0qyJfIxfs2guVoUubWwvniR2G0FgaC9mi');
+  Configure::write('Security.salt', '<%= @node['cakephp']['config']['salt']  %>');
 
 /**
  * A random numeric string (digits only) used to encrypt/decrypt strings.
  */
-  Configure::write('Security.cipherSeed', '76859309657453542496749683645');
+  Configure::write('Security.cipherSeed', '<%= @node['cakephp']['config']['seed']  %>');
 
 /**
  * Apply timestamps with the last modified time to static assets (js, css, images).

@@ -19,12 +19,17 @@
 #
 
 # General settings
+default[:cakephp][:install_method] = "url"
+default[:cakephp][:install_url] = "http://github.com/cakephp/cakephp/tarball/"
 default[:cakephp][:version] = "1.3.4"
 default[:cakephp][:dir] = "/var/www/cakephp"
+
+default[:cakephp][:db][:host] = "localhost"
 default[:cakephp][:db][:database] = "cakephpdb"
 default[:cakephp][:db][:user] = "cakephpuser"
+default[:cakephp][:db][:password] = "password"
 
-::Chef::Node.send(:include, Opscode::OpenSSL::Password)
-
-default[:cakephp][:db][:password] = secure_password
-default[:cakephp][:salt] = secure_password
+default[:cakephp][:config][:debug] = "0"
+default[:cakephp][:config][:salt] = "random"
+default[:cakephp][:config][:seed] = "random"
+default[:cakephp][:config][:security_level] = "random"

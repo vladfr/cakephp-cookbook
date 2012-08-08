@@ -40,6 +40,21 @@ attribute "cakephp/config/debug",
   :description => "Cake debugger. 0 for disabled, 1 for enabled, 2 for enabled with traces",
   :default => "0"
 
+attribute "cakephp/config/salt",
+  :display_name => "Salt value",
+  :description => "A random string used in security hashing methods.",
+  :default => "DYhG93b0qyJfIxfs2guVoUubWwvniR2G0FgaC9mi"
+
+attribute "cakephp/config/seed",
+  :display_name => "Seed value",
+  :description => "A random numeric string (digits only) used to encrypt/decrypt strings.",
+  :default => "76859309657453542496749683645"
+
+attribute "cakephp/config/security_level",
+  :display_name => "Security level",
+  :description => "A random numeric string (digits only) used to encrypt/decrypt strings.",
+  :default => "medium"
+
 attribute "cakephp/db/host",
   :display_name => "CakePHP DB host",
   :description => "CakePHP will use this URL as a db host machine.",

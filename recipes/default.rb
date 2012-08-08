@@ -45,50 +45,10 @@ end
 
 # Make the CakePHP tmp directory writable
 execute "make tmp dir writable" do
-  command "chown -R www-data:www-data #{node[:cakephp][:dir]}/app/tmp"
+  command "chown -R #{node[:apache][:user]}:#{node[:apache][:group]} #{node[:cakephp][:dir]}/app/tmp"
 end
 execute "make tmp dir writable" do
   command "chmod -R 755 #{node[:cakephp][:dir]}/app/tmp"
-end
-
-execute "mysql-install-cakephp-privileges" do
-  command "/usr/bin/mysql -u root -p#{node[:mysql][:server_root_password]} < /etc/mysql/cakephp-grants.sql"
-  action :nothing
-end
-
-include_recipe "mysql::server"
-require 'rubygems'
-Gem.clear_paths
-require 'mysql'
-
-template "/etc/mysql/cakephp-grants.sql" do
-  path "/etc/mysql/cakephp-grants.sql"
-  source "grants.sql.erb"
-  owner "root"
-  group "root"
-  mode "0600"
-  variables(
-    :user     => node[:cakephp][:db][:user],
-    :password => node[:cakephp][:db][:password],
-    :database => node[:cakephp][:db][:database]
-  )
-  notifies :run, resources(:execute => "mysql-install-cakephp-privileges"), :immediately
-end
-
-execute "create #{node[:cakephp][:db][:database]} database" do
-  command "/usr/bin/mysqladmin -u root -p#{node[:mysql][:server_root_password]} create #{node[:cakephp][:db][:database]}"
-  not_if do
-    m = Mysql.new("localhost", "root", node[:mysql][:server_root_password])
-    m.list_dbs.include?(node[:cakephp][:db][:database])
-  end
-end
-
-# save node data after writing the MYSQL root password, so that a failed chef-client run that gets this far doesn't cause an unknown password to get applied to the box without being saved in the node data.
-ruby_block "save node data" do
-  block do
-    node.save
-  end
-  action :create
 end
 
 template "#{node[:cakephp][:dir]}/app/config/database.php" do
@@ -98,9 +58,9 @@ template "#{node[:cakephp][:dir]}/app/config/database.php" do
   mode "0644"
   variables(
     :host            => node[:cakephp][:db][:host],
-    :database        => node[:cakephp][:db][:database],
     :user            => node[:cakephp][:db][:user],
-    :password        => node[:cakephp][:db][:password]
+    :password        => node[:cakephp][:db][:password],
+    :database        => node[:cakephp][:db][:database]
   )
 end
 
@@ -110,16 +70,8 @@ template "#{node[:cakephp][:dir]}/app/config/core.php" do
   owner "root"
   group "root"
   mode "0644"
-  variables(
-    :salt => node[:cakephp][:salt]
-  )
 end
 
-include_recipe %w{php::php5 php::module_mysql}
-
-web_app "cakephp" do
-  template "cakephp.conf.erb"
-  docroot "#{node[:cakephp][:dir]}/app/webroot"
-  server_name server_fqdn
-  server_aliases node.fqdn
+template "#{node[:apache][:dir]}/cakephp.conf" do
+  source "cakephp.apache.conf.erb"
 end
