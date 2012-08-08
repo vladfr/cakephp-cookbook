@@ -16,8 +16,8 @@ recipe "cakephp", "Installs and configures CakePHP LAMP stack on a single system
 end
 
 attribute "cakephp/install_method",
-  :display_name => "CakePHP install version"
-  :description => "Values: url, source, package"
+  :display_name => "CakePHP install version",
+  :description => "Values: url, source, package",
   :default => "url"
 
 attribute "cakephp/install_url",
